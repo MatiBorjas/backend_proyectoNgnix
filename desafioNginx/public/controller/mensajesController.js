@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import schemaMensaje from "../models/schemaMensaje.js";
-import { errorLogger } from "../src/utils/loggers";
+import { errorLogger } from "../src/utils/loggers.js";
 
 class MensajesController {
   constructor() {

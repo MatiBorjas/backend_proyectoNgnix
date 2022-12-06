@@ -11,6 +11,7 @@ import session from "express-session";
 import { Server } from "socket.io";
 import { socketController } from "./src/utils/socketController.js"
 import { productosRouter, homeRouter, loginRouter, signupRouter, logoutRouter, infoRouter, apiRandomRouter } from "./routes/index.js";
+import { logger } from "./src/utils/loggers.js"
 // import MongoStore from "connect-mongo";
 
 //---------------------------------------------------------------------

@@ -1,5 +1,5 @@
 import { fork } from "child_process";
-import { errorLogger } from "../src/utils/loggers";
+import { errorLogger } from "../src/utils/loggers.js";
 import parseArgs from "minimist";
 
 export const apiRandomController = {

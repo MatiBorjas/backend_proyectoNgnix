@@ -1,5 +1,5 @@
 import { creadorProductosFaker } from "../models/mocks/index.js";
-import { errorLogger } from "../src/utils/loggers";
+import { errorLogger } from "../src/utils/loggers.js";
 
 export const productosController = {
   getData: async (req, res) => {

@@ -1,4 +1,4 @@
-import { errorLogger } from "../src/utils/loggers";
+import { errorLogger } from "../src/utils/loggers.js";
 
 export const loginController = {
   get: (req, res) => {
