@@ -1,11 +1,22 @@
 import { fork } from "child_process";
+import { errorLogger } from "../src/utils/loggers";
+import parseArgs from "minimist";
 
 export const apiRandomController = {
   get: (req, res) => {
     try {
-      res.status(200).render("pages/random");
+      const args = parseArgs(process.argv.slice(2));
+
+      res.status(200).render("pages/random", {
+        port: args !== undefined ? args.PORT : "",
+      });
     } catch (error) {
-      res.status(500).send({ error });
+      errorLogger.error({
+        URL: req.originalUrl,
+        method: req.method,
+        error: error.message,
+      });
+      res.status(500).send(error.message);
     }
   },
   post: (req, res) => {
@@ -17,6 +28,11 @@ export const apiRandomController = {
         res.json(obj);
       });
     } catch (error) {
+      errorLogger.error({
+        URL: req.originalUrl,
+        method: req.method,
+        error: error.message,
+      });
       res.status(500).send({ error });
     }
   },

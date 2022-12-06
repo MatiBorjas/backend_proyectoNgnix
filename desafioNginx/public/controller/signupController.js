@@ -1,3 +1,5 @@
+import { errorLogger } from "../src/utils/loggers";
+
 export const signupController = {
     get: (req, res) => {
       try {
@@ -7,6 +9,9 @@ export const signupController = {
           res.render("pages/signup");
         }
       } catch (error) {
+        errorLogger.error({
+          error: error.message,
+        });
         return res
           .status(500)
           .send({ status: "Get page Sign Up error", body: error });
@@ -18,6 +23,9 @@ export const signupController = {
         req.session.username = username;
         res.redirect("/home");
       } catch (error) {
+        errorLogger.error({
+          error: error.message,
+        });
         return res.status(500).send({ status: "Sign Up error", body: error });
       }
     },
@@ -26,6 +34,9 @@ export const signupController = {
       try {
         res.render("pages/errorSignup");
       } catch (error) {
+        errorLogger.error({
+          error: error.message,
+        });
         res.status(500).send({ status: "Sign Up error", body: error });
       }
     },

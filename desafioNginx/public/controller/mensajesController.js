@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import schemaMensaje from "../models/schemaMensaje.js";
+import { errorLogger } from "../src/utils/loggers";
 
 class MensajesController {
   constructor() {
@@ -8,6 +9,9 @@ class MensajesController {
         "mongodb+srv://admin:admin123@ecommerce.sewmc4q.mongodb.net/test"),
       { useNewUrlParser: true };      
     } catch (error) {
+      errorLogger.error({
+        error: error.message,
+      });
       console.log(error); 
     }  
 }
@@ -19,7 +23,10 @@ class MensajesController {
       await schemaMensaje.create(mensaje);
       return mensaje;
     } catch (error) {
-      throw Error(error.mensaje);
+      errorLogger.error({
+        error: error.message,
+      });
+      // throw Error(error.mensaje);
     }
   }
 
@@ -34,7 +41,9 @@ class MensajesController {
 
       return mensaje;
     } catch (error) {
-      throw Error(error.mensaje);
+      errorLogger.error({
+        error: error.message,
+      });
     }
   } 
 }

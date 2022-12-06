@@ -1,4 +1,5 @@
 import { creadorProductosFaker } from "../models/mocks/index.js";
+import { errorLogger } from "../src/utils/loggers";
 
 export const productosController = {
   getData: async (req, res) => {
@@ -16,8 +17,10 @@ export const productosController = {
           productsExist: false,
         });
       }
-    } catch (e) {
-      console.log(e)
+    } catch (error) {
+      errorLogger.error({
+        error: error.message,
+      });
       res.status(500).send({ error });
     }
   },

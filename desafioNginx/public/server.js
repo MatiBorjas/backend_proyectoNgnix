@@ -6,6 +6,7 @@ import { dirname } from "path";
 import http from "http";
 import { createServer } from "http";
 import express from "express";
+import compression from "compression"
 import session from "express-session";
 import { Server } from "socket.io";
 import { socketController } from "./src/utils/socketController.js"
@@ -46,6 +47,7 @@ const __dirname = dirname(__filename);
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression());
 
 
 //CONECCION A DB
@@ -239,17 +241,19 @@ if (MODO === "CLUSTER") {
     httpServer.listen(PORT, () => {
       console.log(`inicie un Worker nuevo ${process.pid}`);
     });
-    ////////////////////// SOCKET
+
+    //SOCKET
     const io = new Server(httpServer, {});
     socketController(io);
-    /////////////////////
+    //
   }
 } else {
   const httpServer = http.createServer(app);
-  //////////////////////// SOCKET
+  // SOCKET
   const io = new Server(httpServer, {});
   socketController(io);
-  ///////////////////////
+  //
+
   httpServer.listen(PORT, () => {
     console.log("Servidor Funcionando en Puerto: " + PORT);
     console.log("MODO FORK");
@@ -257,9 +261,7 @@ if (MODO === "CLUSTER") {
   httpServer.on("error", (error) => console.log(`Error en servidor ${error}`));
 }
 
-//Socket
-// import { socketModel } from "./src/utils/socket.js";
-// socketModel(io);
-
-//Inicio del servidor
-// httpServer.listen(PORT, () => console.log("Servidor funcionando en puerto " + `${PORT}`));
+app.all("*", (req, res) => {
+  logger.warn({ URL: req.originalUrl, method: req.method });
+  res.status(404).send("Ruta no encontrada");
+});
